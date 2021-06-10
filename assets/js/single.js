@@ -20,7 +20,14 @@ var getRepoIssues = function(repo) {
     });
 };
 
-getRepoIssues("angular/angular");
+var getRepoName = function() {
+    var queryString = document.location.search;
+    var repoName = queryString.split("=")[1];
+    getRepoIssues(repoName);
+    var repoNameEl = document.querySelector("#repo-name");
+    repoNameEl.textContent = repoName;
+}
+
 
 var displayIssues = function(issues) {
     if (issues.length === 0) {
@@ -61,8 +68,10 @@ var displayIssues = function(issues) {
 var displayWarning = function(repo) {
     limitWarningEl.textContent = "To see more than 30 issues, visit ";
     var linkEl = document.createElement("a");
-    linkEl.textContent = "See more issues on GitHub.com";
+    linkEl.textContent = "GitHub.com";
     linkEl.setAttribute("href", "https://github.com/" + repo + "/issues");
     linkEl.setAttribute("target", "_blank");
     limitWarningEl.appendChild(linkEl);
 }
+
+getRepoName();
